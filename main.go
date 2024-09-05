@@ -15,11 +15,13 @@ func main() {
 		log.Fatal(err)
 	}
 	
-	router := chi.NewMux()
+	router := chi.NewRouter()
 
 	router.Handle("/*", public())
 
-	router.Get("/", handlers.Make(handlers.HandleHome))
+	router.Get("/", handlers.HandleHome)
+	router.Get("/login", handlers.HandleLogin)
+	router.Get("/register", handlers.HandleRegister)
 
 	listenAddr := os.Getenv("LISTEN_ADDR")
 	log.Println("HTTP server started in port", listenAddr)
