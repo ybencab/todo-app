@@ -13,7 +13,7 @@ import (
 
 type Server struct {
 	Router *chi.Mux
-	Store  *store.Store
+	Store  store.Store
 }
 
 func main() {
@@ -21,19 +21,31 @@ func main() {
 		log.Fatal(err)
 	}
 
-	server := NewServer()
+	connStr := os.Getenv("DB_URL")
+	if connStr == "" {
+		log.Fatal("DB_URL not defined")
+	}
+
+	store := store.NewPostgresStore(connStr)
+
+	server := NewServer(store)
 	server.MountHandlers()
 
 	listenAddr := os.Getenv("LISTEN_ADDR")
+	if listenAddr == "" {
+		log.Fatal("LISTEN_ADDR not defined")
+	}
+
 	log.Println("HTTP server started in port", listenAddr)
 	if err := http.ListenAndServe(listenAddr, server.Router); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func NewServer() *Server {
+func NewServer(store store.Store) *Server {
 	return &Server{
 		Router: chi.NewRouter(),
+		Store:  store,
 	}
 }
 

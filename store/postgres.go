@@ -1,11 +1,26 @@
 package store
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
 
-type PostgreStore struct {
+	_ "github.com/lib/pq"
+)
+
+type PostgresStore struct {
 	db *sql.DB
 }
 
-func NewPostgreStore() *PostgreStore {
-	return &PostgreStore{}
+func NewPostgresStore(connStr string) *PostgresStore {
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal("error: ", err.Error())
+	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("error: ", err.Error())
+	}
+
+	return &PostgresStore{db}
 }
