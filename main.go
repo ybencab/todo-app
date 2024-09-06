@@ -20,7 +20,11 @@ func main() {
 	router.Handle("/*", public())
 
 	router.Get("/", handlers.HandleHome)
-	router.Get("/login", handlers.HandleLogin)
+	
+	router.Route("/login", func(r chi.Router) {
+		r.Get("/", handlers.HandleLoginView)
+		r.Post("/", handlers.HandleLoginUser)
+	})
 	
 	router.Route("/register", func(r chi.Router) {
 		r.Get("/", handlers.HandleRegisterView)
