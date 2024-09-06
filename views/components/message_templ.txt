@@ -1,2 +1,0 @@
-<p class=\"text-xl text-blue-200 bg-red-600\">
-</p>

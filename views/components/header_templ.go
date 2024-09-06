@@ -26,7 +26,7 @@ func Header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<header class=\"bg-gray-800 text-white py-2 px-2\"><div class=\"container mx-auto flex justify-between items-center\"><a href=\"/\" class=\"text-xl font-bold\">ToDo App</a><div class=\"flex\"><div class=\"border rounded-md bg-gray-100 px-2 mr-2\"><a href=\"/register\" class=\"text-black font-medium hover:underline\">Register</a></div><div class=\"border rounded-md bg-gray-100 px-2\"><a href=\"/login\" class=\"text-black font-medium hover:underline\">Login</a></div></div></div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
