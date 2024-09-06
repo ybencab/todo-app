@@ -21,7 +21,11 @@ func main() {
 
 	router.Get("/", handlers.HandleHome)
 	router.Get("/login", handlers.HandleLogin)
-	router.Get("/register", handlers.HandleRegister)
+	
+	router.Route("/register", func(r chi.Router) {
+		r.Get("/", handlers.HandleRegisterView)
+		r.Post("/", handlers.HandleRegisterUser)
+	})
 
 	listenAddr := os.Getenv("LISTEN_ADDR")
 	log.Println("HTTP server started in port", listenAddr)
