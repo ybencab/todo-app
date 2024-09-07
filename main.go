@@ -18,7 +18,7 @@ type Server struct {
 
 func main() {
 	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal(err)
+		log.Println("No .env file found, relying on environment variables")
 	}
 
 	connStr := os.Getenv("DB_URL")
