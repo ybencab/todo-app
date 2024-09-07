@@ -31,9 +31,9 @@ func main() {
 	server := NewServer(store)
 	server.MountHandlers()
 
-	listenAddr := os.Getenv("LISTEN_ADDR")
+	listenAddr := os.Getenv("PORT")
 	if listenAddr == "" {
-		log.Fatal("LISTEN_ADDR not defined")
+		log.Fatal("PORT not defined")
 	}
 
 	log.Println("HTTP server started in port", listenAddr)
