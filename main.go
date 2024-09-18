@@ -27,6 +27,9 @@ func main() {
 	}
 
 	store := store.NewPostgresStore(connStr)
+	if err := store.Init(); err != nil {
+		log.Fatal("Error initializing database: ", err)
+	}
 
 	server := NewServer(store)
 	server.MountHandlers()
@@ -60,5 +63,9 @@ func (s *Server) MountHandlers() {
 	s.Router.Route("/register", func(r chi.Router) {
 		r.Get("/", handlers.HandleRegisterView)
 		r.Post("/", handlers.HandleRegisterUser)
+	})
+	s.Router.Route("/todo", func(r chi.Router) {
+		r.Get("/", handlers.HandleTodo)
+		r.Get("/all", handlers.HandletGetTodo)
 	})
 }

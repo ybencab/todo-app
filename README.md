@@ -2,7 +2,7 @@
 
 ## Requisitos
 1. Tener Instalado Air y Templ
-2. Configurar el .env con las variables: LISTEN_ADDR
+2. Configurar el .env con las variables: PORT, DB_URL
 
 ## Para iniciar dev
 1. Ejecutar: $ air
