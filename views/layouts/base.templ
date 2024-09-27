@@ -12,9 +12,14 @@ templ Base() {
 			<link href="/public/styles.css" rel="stylesheet">
       <script src="https://unpkg.com/htmx.org@2.0.2" defer></script>
 		</head>
-		<body>
+		<body class="flex flex-col min-h-screen bg-gray-800">
 			@components.Header()
-      { children... }
+			<main class="flex-grow flex items-center justify-center">
+				<div class="mx-auto max-w-screen-md w-full">
+					{ children... }
+				</div>
+			</main>
+			@components.Footer()
 		</body>
 	</html>
 }

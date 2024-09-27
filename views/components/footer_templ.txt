@@ -1,0 +1,1 @@
+<footer class=\"border-t-4 border-gray-700 text-white py-5 w-full bg-gray-900\"><div class=\"max-w-screen-md mx-auto flex justify-between\"><p class=\"\">Yoel Benítez Cabrera</p><a href=\"https://github.com/ybencab\" target=\"_blank\" class=\"underline hover:text-violet-400\">Más proyectos</a></div></footer>
