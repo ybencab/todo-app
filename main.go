@@ -17,10 +17,12 @@ type Server struct {
 }
 
 func main() {
+	log.Println("Starting server...")
 	if err := godotenv.Load(".env"); err != nil {
 		log.Println("No .env file found, relying on environment variables")
 	}
 
+	log.Println("Connecting to database...")
 	connStr := os.Getenv("DB_URL")
 	if connStr == "" {
 		log.Fatal("DB_URL not defined")

@@ -29,7 +29,7 @@ func Footer() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<footer class=\"border-t-4 border-gray-700 text-white py-5 w-full bg-gray-900\"><div class=\"max-w-screen-md mx-auto flex justify-between\"><p class=\"\">Yoel Benítez Cabrera</p><a href=\"https://github.com/ybencab\" target=\"_blank\" class=\"underline hover:text-violet-400\">Más proyectos</a></div></footer>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

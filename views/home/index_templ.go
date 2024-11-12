@@ -43,7 +43,7 @@ func Index() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"bg-violet-400 shadow-lg rounded-xl p-2\"><h1 class=\"text-gray-100 font-bold text-3xl text-center mb-2\">¡Bienvenido!</h1><p class=\"text-xl text-gray-700 text-center\">Prueba a registrarte para comenzar a usar la web</p></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
