@@ -5,12 +5,22 @@ import (
 	"regexp"
 ) 
 
-func ValidateRegisterUserRequest(email, password string) error {
+func ValidateRegisterUserRequest(username, email, password string) error {
+	if err := validateUsername(username); err != nil {
+		return err
+	}
 	if err := validateEmail(email); err != nil {
 		return err
 	}
 	if err := validatePassword(password); err != nil {
 		return err
+	}
+	return nil
+}
+
+func validateUsername(username string) error {
+	if len(username) < 3 {
+		return errors.New("username must be at least 3 characters long")
 	}
 	return nil
 }

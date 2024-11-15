@@ -29,28 +29,44 @@ func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Requ
 	// modificando todo lo que sea necesario del mismo
 	// ------
 	// Por otro lado, si la petición viene de otro cliente, devoleremos el JSON como en REST API tradicional
+	
+	// Parse form data
 	if err := r.ParseForm(); err != nil {
-		components.RegisterForm("", "Invalid form data", "").Render(r.Context(), w)
+		components.RegisterForm("", "", "Invalid form data", "").Render(r.Context(), w)
 		return
 	}
 	
+	// Getting form values and validating them
+	username := r.FormValue("username")
 	email := r.FormValue("email")
 	password := r.FormValue("password")
-	if err := validators.ValidateRegisterUserRequest(email, password); err != nil {
-		components.RegisterForm(email, err.Error(), "").Render(r.Context(), w)
+	if err := validators.ValidateRegisterUserRequest(username, email, password); err != nil {
+		components.RegisterForm(username, email, err.Error(), "").Render(r.Context(), w)
 		return
 	}
 	
-	new_user, err := types.NewUser(email, password)
+	// Check if user already exists
+	if _, err := h.store.GetUserByUsername(username); err == nil {
+		components.RegisterForm(username, email, "Username already in use", "").Render(r.Context(), w)
+		return
+	}
+	if _, err := h.store.GetUserByEmail(email); err == nil {
+		components.RegisterForm(username, email, "Email already in use", "").Render(r.Context(), w)
+		return
+	}
+
+	// Create user
+	new_user, err := types.NewUser(username, email, password)
 	if err != nil {
-		components.RegisterForm(email, "Error creating user", "").Render(r.Context(), w)
+		components.RegisterForm(username, email, "Error creating user", "").Render(r.Context(), w)
 		return
 	}
 
+	// Inserting user to database
 	if err := h.store.CreateUser(new_user); err != nil {
-		components.RegisterForm(email, "Error registering user", "").Render(r.Context(), w)
+		components.RegisterForm(username, email, "Error registering user", "").Render(r.Context(), w)
 		return
 	}
 
-	components.RegisterForm("", "", "User registration complete").Render(r.Context(), w)
+	components.RegisterForm("", "", "", "User registration complete").Render(r.Context(), w)
 }

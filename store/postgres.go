@@ -116,6 +116,10 @@ func (s *PostgresStore) CreateUser(req *types.User) error {
 	return errors.New("NO DEFINIDO")
 }
 
+func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) {
+	return nil, errors.New("NO DEFINIDO")
+}
+
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
 	return nil, errors.New("NO DEFINIDO")
 }

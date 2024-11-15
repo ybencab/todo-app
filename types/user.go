@@ -9,6 +9,7 @@ import (
 )
 
 type CreateUserRequest struct {
+	Username string `json:"username"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
@@ -20,14 +21,15 @@ type LoginUserRequest struct {
 
 type User struct {
 	ID        uuid.UUID `json:"id"`
+	Username  string    `json:"username"`
 	Email     string    `json:"email"`
 	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func NewUser(email, password string) (*User, error) {
-	if len(email) == 0 || len(password) == 0 {
-		return nil, errors.New("email and password are required")
+func NewUser(username, email, password string) (*User, error) {
+	if len(email) == 0 || len(password) == 0 || len(username) == 0 {
+		return nil, errors.New("username, email, and password must not be empty")
 	}
 
 	hashed_password, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -37,6 +39,7 @@ func NewUser(email, password string) (*User, error) {
 
 	return &User{
 		ID:        uuid.New(),
+		Username:  username,
 		Email:     email,
 		Password:  string(hashed_password),
 		CreatedAt: time.Now(),
