@@ -30,6 +30,18 @@ func ScanRowIntoToDo(row *sql.Rows) (*types.ToDo, error) {
 	return todo, err
 }
 
+func ScanRowIntoUser(row *sql.Rows) (*types.User, error) {
+	user := new(types.User)
+	err := row.Scan(
+		&user.ID,
+		&user.Username,
+		&user.Email,
+		&user.CreatedAt,
+		&user.Password,
+	)
+	return user, err
+}
+
 func CompareHashAndPassword(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }

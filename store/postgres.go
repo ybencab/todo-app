@@ -113,17 +113,65 @@ func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
 }
 
 func (s *PostgresStore) CreateUser(req *types.User) error {
-	return errors.New("NO DEFINIDO")
+	query := `insert into users
+		(id, username, email, created_at, hashed_password)
+		values ($1, $2, $3, $4, $5)`
+
+	_, err := s.db.Query(
+		query,
+		req.ID,
+		req.Username,
+		req.Email,
+		req.CreatedAt,
+		req.Password,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) {
-	return nil, errors.New("NO DEFINIDO")
+	rows, err := s.db.Query("select * from users where username = $1", username)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		return utils.ScanRowIntoUser(rows)
+	}
+
+	return nil, errors.New("user not found")	
 }
 
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
-	return nil, errors.New("NO DEFINIDO")
+	rows, err := s.db.Query("select * from users where email = $1", email)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		return utils.ScanRowIntoUser(rows)
+	}
+
+	return nil, errors.New("user not found")
 }
 
 func (s *PostgresStore) GetAllUsers() ([]*types.User, error) {
-	return nil, errors.New("NO DEFINIDO")
+	rows, err := s.db.Query("select * from users")
+	if err != nil {
+		return nil, err
+	}
+
+	users := []*types.User{}
+	for rows.Next() {
+		user, err := utils.ScanRowIntoUser(rows)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil	
 }
