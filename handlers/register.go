@@ -24,11 +24,6 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
-	if err := r.ParseForm(); err != nil {
-		utils.WriteJSON(w, http.StatusBadRequest, map[string]string{"error": "invalid form data"})
-		return
-	}
-	
 	email := r.FormValue("email")
 	password := r.FormValue("password")
 	if err := validators.ValidateRegisterUserRequest(email, password); err != nil {
