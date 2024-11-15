@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/ybencab/todo-app/types"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func WriteJSON(w http.ResponseWriter, status int, data any) {
@@ -27,4 +28,8 @@ func ScanRowIntoToDo(row *sql.Rows) (*types.ToDo, error) {
 		&todo.CreatedAt,
 	)
 	return todo, err
+}
+
+func CompareHashAndPassword(hashedPassword, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }

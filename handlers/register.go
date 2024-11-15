@@ -3,17 +3,28 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/ybencab/todo-app/store"
 	"github.com/ybencab/todo-app/types"
 	"github.com/ybencab/todo-app/validators"
-	"github.com/ybencab/todo-app/views/register"
 	"github.com/ybencab/todo-app/views/components"
+	"github.com/ybencab/todo-app/views/register"
 )
 
-func HandleRegisterView(w http.ResponseWriter, r *http.Request) {
+type RegisterHandler struct {
+	store store.Store
+}
+
+func NewRegisterHandler(store store.Store) *RegisterHandler {
+	return &RegisterHandler{
+		store: store,
+	}
+}
+
+func (h *RegisterHandler) HandleRegisterView(w http.ResponseWriter, r *http.Request) {
 	register.Index().Render(r.Context(), w)
 }
 
-func HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
+func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
 	// TODO: en caso de que la petición venga de HTMX devolveremos el HTML completo del formulario,
 	// modificando todo lo que sea necesario del mismo
 	// ------
@@ -30,9 +41,16 @@ func HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
-	user := new(types.CreateUserRequest)
-	user.Email = email
-	user.Password = password
+	new_user, err := types.NewUser(email, password)
+	if err != nil {
+		components.RegisterForm(email, "Error creating user", "").Render(r.Context(), w)
+		return
+	}
 
-	components.RegisterForm("", "", user.Email + " " + user.Password).Render(r.Context(), w)
+	if err := h.store.CreateUser(new_user); err != nil {
+		components.RegisterForm(email, "Error registering user", "").Render(r.Context(), w)
+		return
+	}
+
+	components.RegisterForm("", "", "User registration complete").Render(r.Context(), w)
 }
