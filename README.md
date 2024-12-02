@@ -12,4 +12,3 @@ Comprobación de ssh
 
 ## Para iniciar prod
 1. Ejecutar: $ make run
-hola desde arch
