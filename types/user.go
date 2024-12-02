@@ -8,17 +8,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type CreateUserRequest struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type LoginUserRequest struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 type User struct {
 	ID        uuid.UUID `json:"id"`
 	Username  string    `json:"username"`

@@ -8,8 +8,10 @@ package login
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/ybencab/todo-app/views/layouts"
-import "github.com/ybencab/todo-app/views/components"
+import (
+	"github.com/ybencab/todo-app/views/components"
+	"github.com/ybencab/todo-app/views/layouts"
+)
 
 func Index() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -52,7 +54,15 @@ func Index() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col items-center mt-5\"><div class=\"px-2 py-2 bg-gray-50 shadow-xl\"><form hx-post=\"/login\" hx-swap=\"innerHTML\"><div class=\"mb-5\"><label for=\"email\" class=\"block mb-2 text-sm font-medium text-gray-900\">Your email</label> <input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"email\" name=\"email\" placeholder=\"email@example.com\" required></div><div class=\"mb-5\"><label for=\"password\" class=\"block mb-2 text-sm font-medium text-gray-900\">Your password</label> <input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"password\" name=\"password\" required></div><div class=\"flex flex-col items-center\"><button class=\"text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 font-medium\" type=\"submit\">Login</button></div></form></div></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col items-center mt-5\"><div class=\"px-2 py-2 bg-gray-50 shadow-xl\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.LoginForm("", "", "").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -1,28 +1,53 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 
-	"github.com/ybencab/todo-app/types"
+	"github.com/ybencab/todo-app/store"
+	"github.com/ybencab/todo-app/utils"
+	"github.com/ybencab/todo-app/views/components"
 	"github.com/ybencab/todo-app/views/login"
 )
 
-func HandleLoginView(w http.ResponseWriter, r *http.Request) {
+type LoginHandler struct {
+	store store.Store
+}
+
+func NewLoginHandler(store store.Store) *LoginHandler {
+	return &LoginHandler{
+		store: store,
+	}
+}
+
+func (h *LoginHandler) HandleLoginView(w http.ResponseWriter, r *http.Request) {
 	login.Index().Render(r.Context(), w)
 }
 
-func HandleLoginUser(w http.ResponseWriter, r *http.Request) {
-	user := new(types.LoginUserRequest)
+func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
+	// Parse form data
 	if err := r.ParseForm(); err != nil {
-		w.Write([]byte("error"))
+		components.LoginForm("", "Invalid form data", "").Render(r.Context(), w)
 		return
 	}
 
-	user.Email = r.FormValue("email")
-	user.Password = r.FormValue("password")
+	// Getting form values
+	email := r.FormValue("email")
+	password := r.FormValue("password")
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(user)
+
+	// Check if user exists
+	user, err := h.store.GetUserByEmail(email)
+	if err != nil {
+		components.LoginForm(email, "User not found", "").Render(r.Context(), w)
+		return
+	}
+
+	// Compare password
+	if err := utils.CompareHashAndPassword(user.Password, password); err != nil {
+		components.LoginForm(email, "Invalid password", "").Render(r.Context(), w)
+		return
+	}
+
+	// Success message
+	components.LoginForm(email, "Login successful", "").Render(r.Context(), w)
 }
