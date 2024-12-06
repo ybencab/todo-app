@@ -48,6 +48,5 @@ func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Success message
-	components.LoginForm(email, "Login successful", "").Render(r.Context(), w)
+	http.Redirect(w, r, "/todo", http.StatusSeeOther)
 }
