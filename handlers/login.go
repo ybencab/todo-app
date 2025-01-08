@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/ybencab/todo-app/store"
 	"github.com/ybencab/todo-app/utils"
@@ -47,6 +48,23 @@ func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
 		components.LoginForm(email, "Invalid password", "").Render(r.Context(), w)
 		return
 	}
+
+	// JWT (For simplicity, we store the token in a cookie non-httponly)
+	token, err := utils.GenerateJWT(user.ID)
+	if err != nil {
+		components.LoginForm(email, err.Error(), "").Render(r.Context(), w)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "jwt",
+		Value: token,
+		HttpOnly: false,
+		Secure: false,
+		SameSite: http.SameSiteStrictMode,
+		Path : "/",
+		Expires : time.Now().Add(time.Hour * 24),
+	})
 
 	http.Redirect(w, r, "/todo", http.StatusSeeOther)
 }

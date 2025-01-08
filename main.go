@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"github.com/ybencab/todo-app/handlers"
+	"github.com/ybencab/todo-app/middlewares"
 	"github.com/ybencab/todo-app/store"
 )
 
@@ -71,6 +72,7 @@ func (s *Server) MountHandlers() {
 		r.Post("/", registerHandler.HandleRegisterUser)
 	})
 	s.Router.Route("/todo", func(r chi.Router) {
+		r.Use(middlewares.AuthMiddleware)
 		r.Get("/", todoHandler.HandleTodo)
 		r.Post("/", todoHandler.HandleCreateTodo)
 		r.Get("/all", todoHandler.HandletGetTodos)

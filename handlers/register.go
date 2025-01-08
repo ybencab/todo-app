@@ -25,10 +25,10 @@ func (h *RegisterHandler) HandleRegisterView(w http.ResponseWriter, r *http.Requ
 }
 
 func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
-	// TODO: en caso de que la petición venga de HTMX devolveremos el HTML completo del formulario,
-	// modificando todo lo que sea necesario del mismo
+	// TODO: If the request comes from HTMX, we will return the complete HTML of the form,
+	// modifying everything necessary in it.
 	// ------
-	// Por otro lado, si la petición viene de otro cliente, devoleremos el JSON como en REST API tradicional
+	// On the other hand, if the request comes from another client, we will return JSON as in a traditional REST API.
 	
 	// Parse form data
 	if err := r.ParseForm(); err != nil {
