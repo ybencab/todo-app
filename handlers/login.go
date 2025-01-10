@@ -50,7 +50,7 @@ func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// JWT (For simplicity, we store the token in a cookie non-httponly)
-	token, err := utils.GenerateJWT(user.ID)
+	token, err := utils.GenerateJWT(user.ID, user.Email)
 	if err != nil {
 		components.LoginForm(email, err.Error(), "").Render(r.Context(), w)
 		return
