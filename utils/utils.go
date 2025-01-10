@@ -51,7 +51,7 @@ func CompareHashAndPassword(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
-func GenerateJWT(user_id uuid.UUID) (string, error) {
+func GenerateJWT(user_id uuid.UUID, email string) (string, error) {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
 		return "", errors.New("JWT_SECRET not defined")
@@ -59,6 +59,7 @@ func GenerateJWT(user_id uuid.UUID) (string, error) {
 	
 	claims := jwt.MapClaims{
 		"user_id": user_id,
+		"email":   email,
 		"exp":     time.Now().Add(time.Hour * 24).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
