@@ -3,7 +3,8 @@ Con la finalidad de aprender más acerca de Go y HTMX decidí hacer esta aplicac
 
 ## Requisitos
 1. Tener Instalado Air y Templ
-2. Configurar el .env con las variables: PORT, DB_URL
+2. Una vez clonado el repositorio, para instalar las dependencias ejecutar: $ go mod tidy
+3. Crear el archivo .env con las variables: PORT, DB_URL y JWT_SECRET
 
 ## Para iniciar dev
 1. Ejecutar: $ air
