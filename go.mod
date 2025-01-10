@@ -12,4 +12,4 @@ require (
 	golang.org/x/crypto v0.32.0
 )
 
-require golang.org/x/net v0.34.0 // indirect
+require golang.org/x/net v0.34.0
