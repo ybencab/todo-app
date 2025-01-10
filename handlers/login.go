@@ -66,5 +66,6 @@ func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
 		Expires : time.Now().Add(time.Hour * 24),
 	})
 
-	http.Redirect(w, r, "/todo", http.StatusSeeOther)
+	// When the request comes from HTMX, we will return a redirect header
+	w.Header().Set("HX-Redirect", "/todo")
 }
