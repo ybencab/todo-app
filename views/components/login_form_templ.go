@@ -34,14 +34,14 @@ func LoginForm(last_email, error_message, success_message string) templ.Componen
 			return templ_7745c5c3_Err
 		}
 		if last_email != "" {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input id=\"email\" class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"email\" placeholder=\"email@example.com\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"email\" placeholder=\"email@example.com\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(last_email)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/login_form.templ`, Line: 8, Col: 234}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/login_form.templ`, Line: 8, Col: 223}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -52,12 +52,12 @@ func LoginForm(last_email, error_message, success_message string) templ.Componen
 				return templ_7745c5c3_Err
 			}
 		} else {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input id=\"email\" class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"email\" placeholder=\"email@example.com\" required>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"email\" placeholder=\"email@example.com\" required>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"mb-5\"><label for=\"password\" class=\"block mb-2 text-sm font-medium text-gray-900\">Your password</label> <input id=\"password\" class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"password\" name=\"password\" required></div><div class=\"flex flex-col items-center\"><button class=\"text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 font-medium\" type=\"submit\">Login</button></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"mb-5\"><label for=\"password\" class=\"block mb-2 text-sm font-medium text-gray-900\">Your password</label> <input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"password\" name=\"password\" required></div><div class=\"flex flex-col items-center\"><button class=\"text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 font-medium\" type=\"submit\">Login</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
