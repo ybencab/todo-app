@@ -89,3 +89,14 @@ func ValidateJWT(tokenString string) (jwt.MapClaims, error) {
 	
 	return claims, nil
 }
+
+func FromRegisteredUser(r *http.Request) bool {
+	cookie, err := r.Cookie("jwt")
+	if err == nil && cookie.Value != "" {
+		_, err = ValidateJWT(cookie.Value)
+		if err == nil {
+			return true
+		}
+	}
+	return false
+}
