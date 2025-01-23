@@ -20,7 +20,7 @@ func NewTodoHandler(store store.Store) *ToDoHandler {
 }
 
 func (h *ToDoHandler) HandleTodo(w http.ResponseWriter, r *http.Request) {
-	todo.Index().Render(r.Context(), w)
+	todo.Index(r).Render(r.Context(), w)
 }
 
 func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {

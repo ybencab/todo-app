@@ -7,5 +7,5 @@ import (
 )
 
 func HandleHome(w http.ResponseWriter, r *http.Request) {
-	home.Index().Render(r.Context(), w)
+	home.Index(r).Render(r.Context(), w)
 }

@@ -27,7 +27,7 @@ func (h *LoginHandler) HandleLoginView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	login.Index().Render(r.Context(), w)
+	login.Index(r).Render(r.Context(), w)
 }
 
 func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {

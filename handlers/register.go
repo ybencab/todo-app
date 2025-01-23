@@ -28,7 +28,7 @@ func (h *RegisterHandler) HandleRegisterView(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	register.Index().Render(r.Context(), w)
+	register.Index(r).Render(r.Context(), w)
 }
 
 func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
