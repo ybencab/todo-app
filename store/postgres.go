@@ -54,9 +54,11 @@ func (s *PostgresStore) CreateUsersTable() error {
 func (s *PostgresStore) CreateTodosTable() error {
 	query := `create table if not exists todos (
 		id serial primary key,
+		user_id uuid,
 		title varchar(20) not null,
 		description text not null,
-		created_at timestamptz default now()
+		created_at timestamptz default now(),
+		constraint fk_user foreign key (user_id) references users(id) on delete cascade
 	)`
 
 	_, err := s.db.Query(query)
