@@ -61,6 +61,7 @@ func (s *Server) MountHandlers() {
 	todoHandler := handlers.NewTodoHandler(s.Store)
 	loginHandler := handlers.NewLoginHandler(s.Store)
 	registerHandler := handlers.NewRegisterHandler(s.Store)
+	logoutHandler := handlers.NewLogoutHandler()
 
 	s.Router.Get("/", handlers.HandleHome)
 	s.Router.Route("/login", func(r chi.Router) {
@@ -76,5 +77,8 @@ func (s *Server) MountHandlers() {
 		r.Get("/", todoHandler.HandleTodo)
 		r.Post("/", todoHandler.HandleCreateTodo)
 		r.Get("/all", todoHandler.HandletGetTodos)
+	})
+	s.Router.Route("/logout", func(r chi.Router) {
+		r.Get("/", logoutHandler.HandleLogout)
 	})
 }
