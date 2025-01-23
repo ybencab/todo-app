@@ -1,8 +1,12 @@
 package layouts
 
-import "github.com/ybencab/todo-app/views/components"
+import (
+	"github.com/ybencab/todo-app/utils"
+	"github.com/ybencab/todo-app/views/components"
+	"net/http"
+)
 
-templ Base() {
+templ Base(r *http.Request) {
 	<!DOCTYPE html>
 	<html lang="es">
 		<head>
@@ -13,7 +17,7 @@ templ Base() {
       <script src="https://unpkg.com/htmx.org@2.0.2" defer></script>
 		</head>
 		<body class="flex flex-col min-h-screen bg-gray-800">
-			@components.Header()
+			@components.Header(utils.FromRegisteredUser(r))
 			<main class="flex-grow flex items-center justify-center">
 				<div class="mx-auto max-w-screen-md w-full">
 					{ children... }
