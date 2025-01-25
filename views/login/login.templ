@@ -3,11 +3,11 @@ package login
 import (
 	"github.com/ybencab/todo-app/views/components"
 	"github.com/ybencab/todo-app/views/layouts"
-	"net/http"
+	"github.com/ybencab/todo-app/types"
 )
 
-templ Index(r *http.Request) {
-	@layouts.Base(r) {
+templ Index(userData *types.UserData) {
+	@layouts.Base(userData) {
 		<div>
 			@components.Message("Login")
 			<div class="flex flex-col items-center mt-5">

@@ -1,12 +1,11 @@
 package layouts
 
 import (
-	"github.com/ybencab/todo-app/utils"
+	"github.com/ybencab/todo-app/types"
 	"github.com/ybencab/todo-app/views/components"
-	"net/http"
 )
 
-templ Base(r *http.Request) {
+templ Base(userData *types.UserData) {
 	<!DOCTYPE html>
 	<html lang="es">
 		<head>
@@ -17,7 +16,12 @@ templ Base(r *http.Request) {
       <script src="https://unpkg.com/htmx.org@2.0.2" defer></script>
 		</head>
 		<body class="flex flex-col min-h-screen bg-gray-800">
-			@components.Header(utils.FromRegisteredUser(r))
+			if userData != nil && userData.Authenticated {
+				@components.Header(true)
+			}
+			else {
+				@components.Header(false)
+			}
 			<main class="flex-grow flex items-center justify-center">
 				<div class="mx-auto max-w-screen-md w-full">
 					{ children... }

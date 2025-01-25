@@ -3,11 +3,11 @@ package todo
 import (
   "github.com/ybencab/todo-app/views/layouts"
   "github.com/ybencab/todo-app/views/components"
-  "net/http"
+	"github.com/ybencab/todo-app/types"
 )
 
-templ Index(r *http.Request) {
-  @layouts.Base(r) {
+templ Index(userData *types.UserData) {
+  @layouts.Base(userData) {
     <div>
       @components.Message("Todo index")
       <div class="flex flex-col items-center mt-5">      
