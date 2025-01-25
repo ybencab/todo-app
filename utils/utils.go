@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"errors"
@@ -88,6 +89,11 @@ func ValidateJWT(tokenString string) (jwt.MapClaims, error) {
 	}
 	
 	return claims, nil
+}
+
+func GetUserDataFromContext(ctx context.Context) (types.UserData, bool) {
+	userData, ok := ctx.Value(types.UserContextKey).(types.UserData)
+	return userData, ok
 }
 
 func FromRegisteredUser(r *http.Request) bool {

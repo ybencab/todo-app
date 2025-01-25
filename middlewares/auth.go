@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ybencab/todo-app/utils"
+	"github.com/ybencab/todo-app/types"
 	"golang.org/x/net/context"
 )
 
@@ -31,17 +32,23 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
-		email := claims["email"].(string)
+		email, ok := claims["email"].(string)
 		if !ok {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
+		
+		// Adding user data to context
+		ctx := context.WithValue(
+			r.Context(),
+			types.UserContextKey,
+			types.UserData{
+				ID:            user_id,
+				Email:         email,
+				Authenticated: true,
+			},
+		)
 
-		// Add user_id and email to context
-		ctx := context.WithValue(r.Context(), "user_id", user_id)
-		ctx = context.WithValue(ctx, "email", email)
-		r = r.WithContext(ctx)
-
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
