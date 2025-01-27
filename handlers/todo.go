@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/ybencab/todo-app/store"
-	"github.com/ybencab/todo-app/types"
 	"github.com/ybencab/todo-app/utils"
 	"github.com/ybencab/todo-app/views/todo"
 )
@@ -30,7 +29,7 @@ func (h *ToDoHandler) HandleTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {
-	
+
 }
 
 func (h *ToDoHandler) HandletGetTodos(w http.ResponseWriter, r *http.Request) {

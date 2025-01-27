@@ -5,7 +5,6 @@ import (
 
 	"github.com/ybencab/todo-app/store"
 	"github.com/ybencab/todo-app/types"
-	"github.com/ybencab/todo-app/utils"
 	"github.com/ybencab/todo-app/validators"
 	"github.com/ybencab/todo-app/views/components"
 	"github.com/ybencab/todo-app/views/register"
