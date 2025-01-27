@@ -68,10 +68,12 @@ func (s *Server) MountHandlers() {
 
 	s.Router.Get("/", handlers.HandleHome)
 	s.Router.Route("/login", func(r chi.Router) {
+		r.Use(middlewares.GuestMiddleware)
 		r.Get("/", loginHandler.HandleLoginView)
 		r.Post("/", loginHandler.HandleLoginUser)
 	})
 	s.Router.Route("/register", func(r chi.Router) {
+		r.Use(middlewares.GuestMiddleware)
 		r.Get("/", registerHandler.HandleRegisterView)
 		r.Post("/", registerHandler.HandleRegisterUser)
 	})
