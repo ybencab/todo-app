@@ -6,6 +6,7 @@ import (
 
 	"github.com/ybencab/todo-app/store"
 	"github.com/ybencab/todo-app/types"
+	"github.com/ybencab/todo-app/utils"
 	"github.com/ybencab/todo-app/views/todo"
 )
 
@@ -20,7 +21,12 @@ func NewTodoHandler(store store.Store) *ToDoHandler {
 }
 
 func (h *ToDoHandler) HandleTodo(w http.ResponseWriter, r *http.Request) {
-	todo.Index(r).Render(r.Context(), w)
+	userData, ok := utils.GetUserDataFromContext(r.Context())
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	todo.Index(&userData).Render(r.Context(), w)
 }
 
 func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {

@@ -21,13 +21,7 @@ func NewLoginHandler(store store.Store) *LoginHandler {
 }
 
 func (h *LoginHandler) HandleLoginView(w http.ResponseWriter, r *http.Request) {
-	// If user is already logged in, redirect to /todo
-	if utils.FromRegisteredUser(r) {
-		http.Redirect(w, r, "/todo", http.StatusSeeOther)
-		return
-	}
-
-	login.Index(r).Render(r.Context(), w)
+	login.Index(nil).Render(r.Context(), w)
 }
 
 func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {

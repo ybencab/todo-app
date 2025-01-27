@@ -22,13 +22,7 @@ func NewRegisterHandler(store store.Store) *RegisterHandler {
 }
 
 func (h *RegisterHandler) HandleRegisterView(w http.ResponseWriter, r *http.Request) {
-	// If user is already logged in, redirect to /todo
-	if utils.FromRegisteredUser(r) {
-		http.Redirect(w, r, "/todo", http.StatusSeeOther)
-		return
-	}
-
-	register.Index(r).Render(r.Context(), w)
+	register.Index(nil).Render(r.Context(), w)
 }
 
 func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Request) {
