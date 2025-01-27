@@ -76,6 +76,7 @@ func (s *Server) MountHandlers() {
 		r.Post("/", registerHandler.HandleRegisterUser)
 	})
 	s.Router.Route("/todo", func(r chi.Router) {
+		r.Use(middlewares.RequireAuthMiddleware)
 		r.Get("/", todoHandler.HandleTodo)
 		r.Post("/", todoHandler.HandleCreateTodo)
 		r.Get("/all", todoHandler.HandletGetTodos)
