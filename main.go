@@ -56,6 +56,9 @@ func NewServer(store store.Store) *Server {
 }
 
 func (s *Server) MountHandlers() {
+	// add user data to context
+	s.Router.Use(middlewares.AuthMiddleware)
+
 	s.Router.Handle("/*", public())
 
 	todoHandler := handlers.NewTodoHandler(s.Store)
@@ -73,7 +76,6 @@ func (s *Server) MountHandlers() {
 		r.Post("/", registerHandler.HandleRegisterUser)
 	})
 	s.Router.Route("/todo", func(r chi.Router) {
-		r.Use(middlewares.AuthMiddleware)
 		r.Get("/", todoHandler.HandleTodo)
 		r.Post("/", todoHandler.HandleCreateTodo)
 		r.Get("/all", todoHandler.HandletGetTodos)
