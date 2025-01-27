@@ -67,11 +67,12 @@ func (s *PostgresStore) CreateTodosTable() error {
 
 func (s *PostgresStore) CreateTodo(todo *types.ToDo) error {
 	query := `insert into todos
-		(title, description, created_at)
-		values ($1, $2, $3)`
+		(user_id, title, description, created_at)
+		values ($1, $2, $3, $4)`
 	
 	_, err := s.db.Query(
 		query,
+		todo.UserID,
 		todo.Title,
 		todo.Description,
 		todo.CreatedAt,
