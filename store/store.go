@@ -6,7 +6,7 @@ import (
 
 type Store interface {
 	CreateTodo(*types.ToDo) error
-	GetTodo(int) (*types.ToDo, error)
+	GetTodo(string, string) (*types.ToDo, error)
 	GetTodos() ([]*types.ToDo, error)
 	CreateUser(*types.User) error
 	GetUserByUsername(string) (*types.User, error)
