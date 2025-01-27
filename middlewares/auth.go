@@ -10,45 +10,46 @@ import (
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Get token from cookie
+		userData := types.UserData{Authenticated: false}
+
+		// Get token from cookie if exists and add user data to context
 		cookie, err := r.Cookie("jwt")
-		if err != nil || cookie.Value == "" {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
+		if err == nil {
+			claims, err := utils.ValidateJWT(cookie.Value)
+			if err == nil {
+				userData = types.UserData{
+					Authenticated: true,
+					ID:      claims["user_id"].(string),
+					Email:         claims["email"].(string),
+				}
+			}
 		}
 
-		tokenString := cookie.Value
-		
-		// Validate token
-		claims, err := utils.ValidateJWT(tokenString)
-		if err != nil {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
-
-		// Get user_id and email from claims
-		user_id, ok := claims["user_id"].(string)
-		if !ok {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
-		email, ok := claims["email"].(string)
-		if !ok {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
-		
-		// Adding user data to context
-		ctx := context.WithValue(
-			r.Context(),
-			types.UserContextKey,
-			types.UserData{
-				ID:            user_id,
-				Email:         email,
-				Authenticated: true,
-			},
-		)
-
+		ctx := context.WithValue(r.Context(), types.UserContextKey, userData)
 		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func RequireAuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userData, ok := utils.GetUserDataFromContext(r.Context())
+		if !ok || !userData.Authenticated {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func GuestMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userData, ok := utils.GetUserDataFromContext(r.Context())
+		if ok && userData.Authenticated {
+			http.Redirect(w, r, "/todo", http.StatusSeeOther)
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	})
 }
