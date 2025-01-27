@@ -30,25 +30,7 @@ func (h *ToDoHandler) HandleTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		w.Write([]byte("error"))
-		return
-	}
-
-	todoTitle := r.FormValue("title")
-	todoDescription := r.FormValue("description")
-	todo := types.NewTodo(todoTitle, todoDescription)
-
-	if err := h.store.CreateTodo(todo); err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		json.NewEncoder(w).Encode(err)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(todo)
+	
 }
 
 func (h *ToDoHandler) HandletGetTodos(w http.ResponseWriter, r *http.Request) {

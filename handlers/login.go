@@ -25,12 +25,6 @@ func (h *LoginHandler) HandleLoginView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *LoginHandler) HandleLoginUser(w http.ResponseWriter, r *http.Request) {
-	// If user is already logged in, redirect to /todo
-	if utils.FromRegisteredUser(r) {
-		http.Redirect(w, r, "/todo", http.StatusSeeOther)
-		return
-	}
-
 	// Parse form data
 	if err := r.ParseForm(); err != nil {
 		components.LoginForm("", "Invalid form data", "").Render(r.Context(), w)

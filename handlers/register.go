@@ -31,12 +31,6 @@ func (h *RegisterHandler) HandleRegisterUser(w http.ResponseWriter, r *http.Requ
 	// ------
 	// On the other hand, if the request comes from another client, we will return JSON as in a traditional REST API.
 	
-	// If user is already logged in, redirect to /todo
-	if utils.FromRegisteredUser(r) {
-		http.Redirect(w, r, "/todo", http.StatusSeeOther)
-		return
-	}
-	
 	// Parse form data
 	if err := r.ParseForm(); err != nil {
 		components.RegisterForm("", "", "Invalid form data", "").Render(r.Context(), w)
