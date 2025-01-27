@@ -55,7 +55,15 @@ func Index(userData *types.UserData) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col items-center mt-5\"><div class=\"px-2 py-2 bg-gray-50 shadow-xl\"><form hx-post=\"/todo\" hx-swap=\"innerHTML\"><div class=\"mb-5\"><label for=\"title\" class=\"block mb-2 text-sm font-medium text-gray-900\">ToDo Title</label> <input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"title\" placeholder=\"My task\" required></div><div class=\"mb-5\"><label for=\"description\" class=\"block mb-2 text-sm font-medium text-gray-900\">ToDo Descriptions</label> <input class=\"bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5\" type=\"text\" name=\"description\" placeholder=\"Description ...\" required></div><div class=\"flex flex-col items-center\"><button class=\"text-white p-2 rounded-lg bg-blue-500 hover:bg-blue-800 focus:ring-4 font-medium\" type=\"submit\">Create</button></div></form></div></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col items-center mt-5\"><div class=\"px-2 py-2 bg-gray-50 shadow-xl\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.ToDoForm("", "", "", "").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
