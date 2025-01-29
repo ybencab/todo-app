@@ -53,7 +53,6 @@ func (s *PostgresStore) CreateUsersTable() error {
 
 func (s *PostgresStore) CreateTodosTable() error {
 	query := `create table if not exists todos (
-		id serial primary key,
 		user_id uuid,
 		title varchar(20) not null,
 		description text not null,
