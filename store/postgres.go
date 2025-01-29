@@ -84,7 +84,7 @@ func (s *PostgresStore) CreateTodo(todo *types.ToDo) error {
 }
 
 func (s *PostgresStore) GetTodo(user_id, title string) (*types.ToDo, error) {
-	rows, err := s.db.Query("select * from todo where id = $1 and user_id = $2", title, user_id)
+	rows, err := s.db.Query("select * from todo where title = $1 and user_id = $2", title, user_id)
 	if err != nil {
 		return nil, err
 	}
