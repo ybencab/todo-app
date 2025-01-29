@@ -94,7 +94,7 @@ func (s *PostgresStore) GetTodo(user_id, title string) (*types.ToDo, error) {
 		return utils.ScanRowIntoToDo(rows)
 	}
 
-	return nil, errors.New("url not found")
+	return nil, errors.New("todo not found")
 }
 
 func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
