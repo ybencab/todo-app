@@ -39,7 +39,7 @@ func (s *PostgresStore) Init() error {
 }
 
 func (s *PostgresStore) CreateUsersTable() error {
-	query := `create table if not exists users (
+	query := `create table if not exists user (
 		id uuid primary key default gen_random_uuid(),
 		username varchar(50) not null unique,
 		email varchar(255) not null unique,
@@ -52,12 +52,12 @@ func (s *PostgresStore) CreateUsersTable() error {
 }
 
 func (s *PostgresStore) CreateTodosTable() error {
-	query := `create table if not exists todos (
+	query := `create table if not exists todo (
 		user_id uuid,
 		title varchar(20) not null,
 		description text not null,
 		created_at timestamptz default now(),
-		constraint fk_user foreign key (user_id) references users(id) on delete cascade
+		constraint fk_user foreign key (user_id) references user(id) on delete cascade
 	)`
 
 	_, err := s.db.Query(query)
@@ -65,7 +65,7 @@ func (s *PostgresStore) CreateTodosTable() error {
 }
 
 func (s *PostgresStore) CreateTodo(todo *types.ToDo) error {
-	query := `insert into todos
+	query := `insert into todo
 		(user_id, title, description, created_at)
 		values ($1, $2, $3, $4)`
 	
@@ -84,7 +84,7 @@ func (s *PostgresStore) CreateTodo(todo *types.ToDo) error {
 }
 
 func (s *PostgresStore) GetTodo(user_id, title string) (*types.ToDo, error) {
-	rows, err := s.db.Query("select * from todos where id = $1 and user_id = $2", title, user_id)
+	rows, err := s.db.Query("select * from todo where id = $1 and user_id = $2", title, user_id)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (s *PostgresStore) GetTodo(user_id, title string) (*types.ToDo, error) {
 }
 
 func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
-	rows, err := s.db.Query("select * from todos")
+	rows, err := s.db.Query("select * from todo")
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
 }
 
 func (s *PostgresStore) CreateUser(req *types.User) error {
-	query := `insert into users
+	query := `insert into user
 		(id, username, email, created_at, hashed_password)
 		values ($1, $2, $3, $4, $5)`
 
@@ -135,7 +135,7 @@ func (s *PostgresStore) CreateUser(req *types.User) error {
 }
 
 func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) {
-	rows, err := s.db.Query("select * from users where username = $1", username)
+	rows, err := s.db.Query("select * from user where username = $1", username)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) 
 }
 
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
-	rows, err := s.db.Query("select * from users where email = $1", email)
+	rows, err := s.db.Query("select * from user where email = $1", email)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
 }
 
 func (s *PostgresStore) GetAllUsers() ([]*types.User, error) {
-	rows, err := s.db.Query("select * from users")
+	rows, err := s.db.Query("select * from user")
 	if err != nil {
 		return nil, err
 	}
