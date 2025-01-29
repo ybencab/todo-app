@@ -39,7 +39,7 @@ func (s *PostgresStore) Init() error {
 }
 
 func (s *PostgresStore) CreateUsersTable() error {
-	query := `create table if not exists user (
+	query := `create table if not exists app_user (
 		id uuid primary key default gen_random_uuid(),
 		username varchar(50) not null unique,
 		email varchar(255) not null unique,
@@ -57,7 +57,7 @@ func (s *PostgresStore) CreateTodosTable() error {
 		title varchar(20) not null,
 		description text not null,
 		created_at timestamptz default now(),
-		constraint fk_user foreign key (user_id) references user(id) on delete cascade
+		constraint fk_user foreign key (user_id) references app_user(id) on delete cascade
 	)`
 
 	_, err := s.db.Query(query)
@@ -115,7 +115,7 @@ func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
 }
 
 func (s *PostgresStore) CreateUser(req *types.User) error {
-	query := `insert into user
+	query := `insert into app_user
 		(id, username, email, created_at, hashed_password)
 		values ($1, $2, $3, $4, $5)`
 
@@ -135,7 +135,7 @@ func (s *PostgresStore) CreateUser(req *types.User) error {
 }
 
 func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) {
-	rows, err := s.db.Query("select * from user where username = $1", username)
+	rows, err := s.db.Query("select * from app_user where username = $1", username)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (s *PostgresStore) GetUserByUsername(username string) (*types.User, error) 
 }
 
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
-	rows, err := s.db.Query("select * from user where email = $1", email)
+	rows, err := s.db.Query("select * from app_user where email = $1", email)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +161,7 @@ func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
 }
 
 func (s *PostgresStore) GetAllUsers() ([]*types.User, error) {
-	rows, err := s.db.Query("select * from user")
+	rows, err := s.db.Query("select * from app_user")
 	if err != nil {
 		return nil, err
 	}
