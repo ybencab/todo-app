@@ -81,7 +81,6 @@ func (s *Server) MountHandlers() {
 		r.Use(middlewares.RequireAuthMiddleware)
 		r.Get("/", todoHandler.HandleTodo)
 		r.Post("/", todoHandler.HandleCreateTodo)
-		r.Get("/all", todoHandler.HandletGetTodos)
 	})
 	s.Router.Route("/logout", func(r chi.Router) {
 		r.Get("/", logoutHandler.HandleLogout)
