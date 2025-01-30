@@ -29,7 +29,14 @@ func (h *ToDoHandler) HandleTodo(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
-	todo.Index(&userData).Render(r.Context(), w)
+
+	todos, err := h.store.GetTodos(userData.ID)
+	if err != nil {
+		todo.Index(&userData, nil).Render(r.Context(), w)
+		return
+	}
+
+	todo.Index(&userData, todos).Render(r.Context(), w)
 }
 
 func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {
@@ -78,12 +85,17 @@ func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ToDoHandler) HandletGetTodos(w http.ResponseWriter, r *http.Request) {
-	todos, err := h.store.GetTodos()
-	if err != nil {
-		w.Write([]byte("error"))
+	userData, ok := utils.GetUserDataFromContext(r.Context())
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
+	todos, err := h.store.GetTodos(userData.ID)
+	if err != nil {
+		http.Error(w, "Error getting todos", http.StatusInternalServerError)
+		return
+	}
+
 	json.NewEncoder(w).Encode(todos)
 }
