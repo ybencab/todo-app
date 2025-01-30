@@ -81,7 +81,7 @@ func (h *ToDoHandler) HandleCreateTodo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
-	components.ToDoForm("", "", "", "Todo created").Render(r.Context(), w)
+	w.Header().Set("Hx-Redirect", "/todo")
 }
 
 func (h *ToDoHandler) HandletGetTodos(w http.ResponseWriter, r *http.Request) {
