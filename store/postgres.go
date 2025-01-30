@@ -96,8 +96,8 @@ func (s *PostgresStore) GetTodo(user_id, title string) (*types.ToDo, error) {
 	return nil, errors.New("todo not found")
 }
 
-func (s *PostgresStore) GetTodos() ([]*types.ToDo, error) {
-	rows, err := s.db.Query("select * from todo")
+func (s *PostgresStore) GetTodos(user_id string) ([]*types.ToDo, error) {
+	rows, err := s.db.Query("select * from todo where user_id = $1", user_id)
 	if err != nil {
 		return nil, err
 	}
