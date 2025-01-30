@@ -1,0 +1,13 @@
+package components
+
+import "github.com/ybencab/todo-app/types"
+
+templ ToDoList(todos []*types.ToDo) {
+  <div class="bg-gray-50 shadow-xl">
+    <ul class="flex flex-col items-center">
+      for _, todo := range todos {
+        <li><span class="font-bold">{todo.Title}</span>: {todo.Description} </li>
+      }
+    </ul>
+  </div>
+}

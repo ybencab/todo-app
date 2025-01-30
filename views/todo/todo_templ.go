@@ -63,7 +63,7 @@ func Index(userData *types.UserData, todos []*types.ToDo) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"mt-5 bg-gray-50 shadow-xl\"><h1 class=\"font-bold px-2 py-2 text-xl\">ToDo List</h1></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
