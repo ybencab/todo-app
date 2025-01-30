@@ -6,7 +6,7 @@ import (
 	"github.com/ybencab/todo-app/types"
 )
 
-templ Index(userData *types.UserData) {
+templ Index(userData *types.UserData, todos []*types.ToDo) {
   @layouts.Base(userData) {
     <div>
       @components.Message("Todo index")
@@ -14,6 +14,7 @@ templ Index(userData *types.UserData) {
         <div class="px-2 py-2 bg-gray-50 shadow-xl">
           @components.ToDoForm("", "", "", "")
         </div>
+        @components.ToDoList(todos)
       </div>
     </div>
   }
